@@ -8,7 +8,7 @@ using WhoAmI.Domain.Entities;
 
 namespace WhoAmI.Application.Repositories
 {
-    internal interface IAnswerRepository : IGenericRepository<Answer,int>
+    public interface IAnswerRepository 
     {
     }
 }
