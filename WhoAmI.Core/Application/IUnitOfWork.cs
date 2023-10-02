@@ -13,5 +13,6 @@ namespace WhoAmI.Core.Application
         Task<int> Save(CancellationToken cancellationToken);
         Task<int> SaveAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys);
         Task Rollback();
+        IGenericRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseAuditableEntity<TId>;
     }
 }
