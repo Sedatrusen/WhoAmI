@@ -8,7 +8,8 @@ using WhoAmI.Domain.Entities;
 
 namespace WhoAmI.Application.Repositories
 {
-    public interface IQuizRepository : IGenericRepository<Quiz,int>
-    {
+    public interface IQuizRepository 
+    { 
+
     }
 }
