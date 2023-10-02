@@ -14,7 +14,7 @@ namespace WhoAmI.Persistence.Contexts
     {
         private readonly IDomainEventDispatcher<TId> _dispatcher;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext<TId>> options,IDomainEventDispatcher<TId> dispatcher)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext<TId>> options,IDomainEventDispatcher<TId> dispatcher) : base(options)
         {
             _dispatcher = dispatcher;
         }
