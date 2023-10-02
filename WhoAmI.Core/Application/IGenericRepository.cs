@@ -9,11 +9,12 @@ namespace WhoAmI.Core.Application
 {
     public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId>
     {
-        ICollection<TEntity> GetAll();
-   
-        TEntity? FindById(TId id);
-        bool Add(TEntity entity);
-        bool Update(TEntity entity);
-        bool Delete(TEntity entity);
+        IQueryable<TEntity> Entities { get; }
+
+        Task<TEntity> GetByIdAsync(int id);
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }
