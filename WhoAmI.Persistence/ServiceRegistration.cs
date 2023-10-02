@@ -14,13 +14,13 @@ using WhoAmI.Domain.Entities;
 using WhoAmI.Persistence.Contexts;
 using WhoAmI.Persistence.Repositories;
 
-namespace Application
+namespace WhoAmI.Persistence
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient(typeof(WhoAmI.Core.Application.IUnitOfWork), typeof(UnitOfWork<>))
+            services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork<>))
                       .AddTransient(typeof(IGenericRepository<MyUser, Guid>), typeof(GenericRepositoy<Guid, MyUser>))
                       .AddTransient(typeof(IGenericRepository<Quiz, int>), typeof(GenericRepositoy<int, Quiz>))
                       .AddTransient(typeof(IGenericRepository<Question, int>), typeof(GenericRepositoy<int, Question>))

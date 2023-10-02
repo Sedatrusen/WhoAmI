@@ -1,12 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <ItemGroup>
+    <ProjectReference Include="..\WhoAmI.Application\WhoAmI.Application.csproj" />
+    <ProjectReference Include="..\WhoAmI.Core\WhoAmI.Core.csproj" />
+    <ProjectReference Include="..\WhoAmI.Domain\WhoAmI.Domain.csproj" />
+    <ProjectReference Include="..\WhoAmI.Persistence\WhoAmI.Persistence.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
