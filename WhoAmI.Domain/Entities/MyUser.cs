@@ -11,12 +11,12 @@ namespace WhoAmI.Domain.Entities
 {
     public class MyUser : BaseAuditableEntity
     {
-        public required string Name { get; set; }
-        public required string Surname { get; set; }
-        public required string Mail { get; set; }
-        public required string Password { get; set; }
+        public  string Name { get; set; }
+        public  string Surname { get; set; }
+        public  string Mail { get; set; }
+        public string Password { get; set; }
 
-        public required Collection<Quiz> Quizzes { get; set; }
+        public  Collection<Quiz>? Quizzes { get; set; }
         public UserType UserType { get; set; }
       
     }

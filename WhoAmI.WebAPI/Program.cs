@@ -1,4 +1,5 @@
 using Application;
+using MediatR;
 using WhoAmI.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,3 +27,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

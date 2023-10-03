@@ -12,14 +12,14 @@ namespace WhoAmI.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext _dpContext;
+        private readonly ApplicationDbContext _dbContext;
         private Hashtable _repositories;
         private bool disposed;
 
 
         public UnitOfWork(ApplicationDbContext dpContext)
         {
-            _dpContext = dpContext ?? throw new ArgumentNullException(nameof(dpContext));
+            _dbContext = dpContext ?? throw new ArgumentNullException(nameof(dpContext));
         }
 
         public void Dispose()
@@ -34,40 +34,42 @@ namespace WhoAmI.Persistence.Repositories
             {
                 if (disposing)
                 {
-                    _dpContext.Dispose();
+                    _dbContext.Dispose();
                 }
 
             }
             disposed = true;
         }
 
-        public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseAuditableEntity
+       public IGenericRepository<T> Repository<T>() where T : BaseAuditableEntity
         {
             if (_repositories == null)
-            
                 _repositories = new Hashtable();
-                var type = typeof(TEntity).Name;
 
-                if (!_repositories.ContainsKey(type))
-                {
-                    var repositoryType = typeof(GenericRepositoy<TEntity>);
-                    var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dpContext);
-                    _repositories.Add(type, repositoryInstance);
+            var type = typeof(T).Name;
 
-                
-                        }
-            return (IGenericRepository<TEntity>)_repositories[type];
+            if (!_repositories.ContainsKey(type))
+            {
+                var repositoryType = typeof(GenericRepository<>);
+
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _dbContext);
+
+                _repositories.Add(type, repositoryInstance);
+            }
+
+            return (IGenericRepository<T>) _repositories[type];
         }
+
 
         public Task Rollback()
         {
-            _dpContext.ChangeTracker.Entries().ToList().ForEach(e => { e.Reload(); });
+            _dbContext.ChangeTracker.Entries().ToList().ForEach(e => { e.Reload(); });
             return Task.CompletedTask;
         }
 
         public async Task<int> Save(CancellationToken cancellationToken)
         {
-            return await _dpContext.SaveChangesAsync(cancellationToken);
+            return await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public Task<int> SaveAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys)

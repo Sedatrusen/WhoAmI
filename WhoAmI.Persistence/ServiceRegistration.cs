@@ -21,15 +21,15 @@ namespace WhoAmI.Persistence
     public static class ServiceRegistration
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
-        { var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-           
-            services.AddDbContext<ApplicationDbContext>(options =>
-              options.UseSqlServer(connectionString,
-                  builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        {
+            services.AddDbContext<ApplicationDbContext>(a =>
+            {
+                a.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
+            
 
             services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork))
-                      .AddTransient(typeof(IGenericRepository<>), typeof(GenericRepositoy<>))
+                      .AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>))
             .AddTransient<IMediator, Mediator>()
                 .AddTransient<IDomainEventDispatcher, DomainEventDispatcher>()
                      .AddTransient<IMyUserRepository, MyUserRepository>()

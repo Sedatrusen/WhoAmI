@@ -12,7 +12,7 @@ namespace WhoAmI.WebAPI.Controllers
         public MyUserController(IMediator mediator) { 
         _mediator = mediator;
         }
-
+        [HttpPost]
         public async Task<ActionResult<Result<int>>> Create(CreateMyUserCommand command)
         {
             return await _mediator.Send(command);

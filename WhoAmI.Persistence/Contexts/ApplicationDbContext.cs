@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace WhoAmI.Persistence.Contexts
     public class ApplicationDbContext : DbContext
     {
         private readonly IDomainEventDispatcher _dispatcher;
+        IConfiguration configuration;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IDomainEventDispatcher dispatcher) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IDomainEventDispatcher dispatcher, IConfiguration configuration) : base(options)
         {
+             this.configuration = configuration;
             _dispatcher = dispatcher;
         }
 
@@ -29,6 +32,19 @@ namespace WhoAmI.Persistence.Contexts
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+        /*  protected override void OnModelCreating(ModelBuilder modelBuilder)
+          {
+              base.OnModelCreating(modelBuilder);
+              modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("WhoAmI.Persistence"));
+          }
+
+          protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+          {
+              if (optionsBuilder.IsConfigured)
+              {
+                  optionsBuilder.UseSqlServer(configuration.GetConnectionString("DbConnStr"));
+              }
+          }*/
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
