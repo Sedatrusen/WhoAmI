@@ -10,5 +10,6 @@ namespace WhoAmI.Application.Repositories
 {
     public interface IMyUserRepository 
     {
+        Task<MyUser> GetMyUserByEmailAsync(string email);
     }
 }

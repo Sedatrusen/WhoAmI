@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,9 @@ namespace WhoAmI.Persistence.Repositories
             _repository = repository;
         }
 
+        public async Task<MyUser> GetMyUserByEmailAsync(string email)
+        {
+           return await _repository.Entities.Where(x => x.Mail == email).FirstAsync();
+                }
     }
 }
