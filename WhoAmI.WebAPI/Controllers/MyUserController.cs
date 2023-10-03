@@ -18,8 +18,8 @@ namespace WhoAmI.WebAPI.Controllers
         {
             return await _mediator.Send(command);
         }
-        [HttpGet]
-        [Route("user/{userMail}")]
+        [HttpPost]
+        [Route("user")]
         public async Task<ActionResult<Result<GetMyUserByEmailDto>>> GetPlayersByClub(string userMail)
         {
             return await _mediator.Send(new GetMyUserByEmailQuery(userMail));

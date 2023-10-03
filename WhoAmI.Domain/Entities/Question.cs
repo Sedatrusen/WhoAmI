@@ -13,7 +13,7 @@ namespace WhoAmI.Domain.Entities
         public required string Body { get; set; }
         public required Collection<Answer> Answers {  get; set; }
      
-               
+        public required int QuizId { get; set; }
 
         
 
