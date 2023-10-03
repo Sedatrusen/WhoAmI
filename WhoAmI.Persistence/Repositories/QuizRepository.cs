@@ -11,9 +11,9 @@ namespace WhoAmI.Persistence.Repositories
 {
     public class QuizRepository : IQuizRepository
     {
-        private readonly IGenericRepository<Quiz, int> _repository;
+        private readonly IGenericRepository<Quiz> _repository;
 
-        public QuizRepository(IGenericRepository<Quiz, int> repository)
+        public QuizRepository(IGenericRepository<Quiz> repository)
         {
             _repository = repository;
         }

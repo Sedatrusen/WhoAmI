@@ -9,10 +9,10 @@ namespace WhoAmI.Core.Domain
 {
 
 
-    public abstract class BaseEntity<TId> : IEntity<TId>
+    public abstract class BaseEntity : IEntity<int>
     {
         private readonly List<BaseEvent> _domainEvents = new();
-        public TId Id { get; set; }
+        public int Id { get; set; }
 
         [NotMapped]
         public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();

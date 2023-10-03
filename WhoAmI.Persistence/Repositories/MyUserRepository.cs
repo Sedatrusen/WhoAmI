@@ -11,9 +11,9 @@ namespace WhoAmI.Persistence.Repositories
 {
     public class MyUserRepository : IMyUserRepository
     {
-        private readonly IGenericRepository<MyUser,Guid> _repository;
+        private readonly IGenericRepository<MyUser> _repository;
 
-        public MyUserRepository(IGenericRepository<MyUser, Guid> repository)
+        public MyUserRepository(IGenericRepository<MyUser> repository)
         {
             _repository = repository;
         }

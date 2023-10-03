@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WhoAmI.Core.Domain
 {
-    public interface IDomainEventDispatcher<TId>
+    public interface IDomainEventDispatcher
     {
-        Task DispatchAndClearEvents(IEnumerable<BaseEntity<TId>> entitiesWithEvents);
+        Task DispatchAndClearEvents(IEnumerable<BaseEntity> entitiesWithEvents);
     }
 }

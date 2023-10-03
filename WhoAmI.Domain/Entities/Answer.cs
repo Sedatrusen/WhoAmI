@@ -7,7 +7,7 @@ using WhoAmI.Core.Domain;
 
 namespace WhoAmI.Domain.Entities
 {
-    public class Answer :BaseAuditableEntity<int>
+    public class Answer :BaseAuditableEntity
     {
         public required string Body {  get; set; }
         public bool IsTrue { get; set; }

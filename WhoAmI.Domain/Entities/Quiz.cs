@@ -9,7 +9,7 @@ using WhoAmI.Domain.Enums;
 
 namespace WhoAmI.Domain.Entities
 {
-    public  class Quiz : BaseAuditableEntity<int>
+    public  class Quiz : BaseAuditableEntity
     {
         public Guid UserId { get; set; }
         public required Collection<Question> Questions { get; set; }

@@ -8,7 +8,7 @@ using WhoAmI.Core.Domain;
 
 namespace WhoAmI.Domain.Entities
 {
-    public class Question : BaseAuditableEntity<int>
+    public class Question : BaseAuditableEntity
     {
         public required string Body { get; set; }
         public required Collection<Answer> Answers {  get; set; }

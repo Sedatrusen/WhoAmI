@@ -10,11 +10,11 @@ using WhoAmI.Domain.Entities;
 
 namespace WhoAmI.Persistence.Contexts
 {
-    public class ApplicationDbContext<TId> : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        private readonly IDomainEventDispatcher<TId> _dispatcher;
+        private readonly IDomainEventDispatcher _dispatcher;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext<TId>> options,IDomainEventDispatcher<TId> dispatcher) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IDomainEventDispatcher dispatcher) : base(options)
         {
             _dispatcher = dispatcher;
         }
@@ -36,7 +36,7 @@ namespace WhoAmI.Persistence.Contexts
 
             if (_dispatcher == null) return result;
 
-            var entitiesWithEvents = ChangeTracker.Entries<BaseEntity<TId>>()
+            var entitiesWithEvents = ChangeTracker.Entries<BaseEntity>()
                 .Select(e => e.Entity)
                 .Where(e => e.DomainEvents.Any())
                 .ToArray();

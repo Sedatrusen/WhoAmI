@@ -10,11 +10,11 @@ using WhoAmI.Persistence.Contexts;
 
 namespace WhoAmI.Persistence.Repositories
 {
-    public class GenericRepositoy<TId, TEntity> : IGenericRepository<TEntity, TId> where TEntity : BaseAuditableEntity<TId>
+    public class GenericRepositoy<TEntity> : IGenericRepository<TEntity> where TEntity : BaseAuditableEntity
     {
-        private readonly ApplicationDbContext<TId> _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public GenericRepositoy(ApplicationDbContext<TId> dbContext)
+        public GenericRepositoy(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

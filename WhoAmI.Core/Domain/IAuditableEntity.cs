@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WhoAmI.Core.Domain
 {
-    public interface IAuditableEntity<TId> : IEntity<TId>
+    public interface IAuditableEntity : IEntity<int>
     {
         int? CreatedBy { get; set; }
         DateTime? CreatedDate { get; set; }

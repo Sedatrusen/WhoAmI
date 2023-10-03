@@ -9,7 +9,7 @@ using WhoAmI.Domain.Enums;
 
 namespace WhoAmI.Domain.Entities
 {
-    public class MyUser : BaseAuditableEntity<Guid>
+    public class MyUser : BaseAuditableEntity
     {
         public required string Name { get; set; }
         public required string Surname { get; set; }

@@ -7,7 +7,7 @@ using WhoAmI.Core.Domain;
 
 namespace WhoAmI.Core.Application
 {
-    public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId>
+    public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         IQueryable<TEntity> Entities { get; }
 

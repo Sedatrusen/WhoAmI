@@ -9,10 +9,10 @@ namespace WhoAmI.Core.Application
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<TEntity,TId> Repository<TEntity,TId>() where TEntity : BaseAuditableEntity<TId>;
+        IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseAuditableEntity;
         Task<int> Save(CancellationToken cancellationToken);
         Task<int> SaveAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys);
         Task Rollback();
-        IGenericRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseAuditableEntity<TId>;
+       
     }
 }

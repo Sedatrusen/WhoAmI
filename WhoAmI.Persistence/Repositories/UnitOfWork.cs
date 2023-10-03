@@ -10,14 +10,14 @@ using WhoAmI.Persistence.Contexts;
 
 namespace WhoAmI.Persistence.Repositories
 {
-    public class UnitOfWork<TId> : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext<TId> _dpContext;
+        private readonly ApplicationDbContext _dpContext;
         private Hashtable _repositories;
         private bool disposed;
 
 
-        public UnitOfWork(ApplicationDbContext<TId> dpContext)
+        public UnitOfWork(ApplicationDbContext dpContext)
         {
             _dpContext = dpContext ?? throw new ArgumentNullException(nameof(dpContext));
         }
@@ -41,7 +41,7 @@ namespace WhoAmI.Persistence.Repositories
             disposed = true;
         }
 
-        public IGenericRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseAuditableEntity<TId>
+        public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseAuditableEntity
         {
             if (_repositories == null)
             
@@ -50,13 +50,13 @@ namespace WhoAmI.Persistence.Repositories
 
                 if (!_repositories.ContainsKey(type))
                 {
-                    var repositoryType = typeof(GenericRepositoy<TId,TEntity>);
+                    var repositoryType = typeof(GenericRepositoy<TEntity>);
                     var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dpContext);
                     _repositories.Add(type, repositoryInstance);
 
                 
                         }
-            return (IGenericRepository<TEntity, TId>)_repositories[type];
+            return (IGenericRepository<TEntity>)_repositories[type];
         }
 
         public Task Rollback()

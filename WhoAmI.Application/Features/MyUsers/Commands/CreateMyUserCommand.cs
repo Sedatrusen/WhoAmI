@@ -9,7 +9,7 @@ using WhoAmI.Domain.Enums;
 
 namespace WhoAmI.Application.Features.MyUsers.Commands
 {
-    public record CreateMyUserCommand : IRequest<Result<Guid>>,IMapFrom<MyUser>
+    public record CreateMyUserCommand : IRequest<Result<int>>,IMapFrom<MyUser>
     {
         public required string Name { get; set; }
         public required string Surname { get; set; }
@@ -21,7 +21,7 @@ namespace WhoAmI.Application.Features.MyUsers.Commands
     }
 
 
-    internal class CreateMyUserCommandHandler : IRequestHandler<CreateMyUserCommand, Result<Guid>>
+    internal class CreateMyUserCommandHandler : IRequestHandler<CreateMyUserCommand, Result<int>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -32,7 +32,7 @@ namespace WhoAmI.Application.Features.MyUsers.Commands
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<Result<Guid>> Handle(CreateMyUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(CreateMyUserCommand request, CancellationToken cancellationToken)
         {
             var myUser = new MyUser()
             {
@@ -43,10 +43,10 @@ namespace WhoAmI.Application.Features.MyUsers.Commands
                 Quizzes = request.Quizzes,
                 UserType= request.UserType
             };
-         await   _unitOfWork.Repository<MyUser, Guid>().AddAsync(myUser);
+         await   _unitOfWork.Repository<MyUser>().AddAsync(myUser);
             myUser.AddDomainEvent(new MyUserCreatedEvent(myUser));
             await _unitOfWork.Save(cancellationToken);
-            return await Result<Guid>.SuccessAsync(myUser.Id, "MyUser Created");
+            return await Result<int>.SuccessAsync(myUser.Id, "MyUser Created");
 
         }
     }
