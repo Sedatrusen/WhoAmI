@@ -8,7 +8,7 @@ using WhoAmI.Domain.Entities;
 
 namespace WhoAmI.Application.Features.Questions.Queries.GetQuestionById
 {
-    public class GetQuesitonByIdDto
+    public class GetQuesitonByQuizIdDto
     {
         public int Id { get; set; }
         public required string Body { get; set; }

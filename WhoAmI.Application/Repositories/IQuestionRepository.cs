@@ -10,5 +10,6 @@ namespace WhoAmI.Application.Repositories
 {
     public interface IQuestionRepository
     {
+        Task<List<Question>> GetQuesitonsByQuizId(int id);
     }
 }

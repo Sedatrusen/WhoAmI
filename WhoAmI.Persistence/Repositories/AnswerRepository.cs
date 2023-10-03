@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,11 @@ namespace WhoAmI.Persistence.Repositories
         public AnswerRepository(IGenericRepository<Answer> repository)
         {
             _repository = repository;
+        }
+
+        public async Task<List<Answer>> GetAnswerByQuesitonId(int id)
+        {
+            return await _repository.Entities.Where(x=> x.QuestionId == id ).ToListAsync();
         }
     }
 }
