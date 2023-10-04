@@ -26,6 +26,7 @@ namespace WhoAmI.Persistence.Contexts
         public DbSet<Quiz> quizs => Set<Quiz>();
         public DbSet<Question> questions => Set<Question>();    
         public DbSet<Answer> answers => Set<Answer>();
+        public DbSet<QuizResult> quizResults => Set<QuizResult>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
