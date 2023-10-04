@@ -41,14 +41,15 @@ namespace WhoAmI.Application.Features.Questions.Queries.GetQuestionById
 
         public async Task<Result<GetQuesitonByQuizIdDto>> Handle(GetQuestionByQuizIdQuery request, CancellationToken cancellationToken)
         {
-            var answerEntity = await _answerRepository.GetAnswerByQuesitonId(request.Id);
-
-            var AnswerList = _mapper.Map<List<GetAnswerByQuestionIdDto>>(answerEntity);
+            
             var entity = await _questionRepository.GetQuesitonsByQuizId(request.Id);
-            
-            var question = _mapper.Map<GetQuesitonByQuizIdDto>(entity);
-            question.Answers =_mapper.Map<Collection<Answer>>(AnswerList);
-            
+               var question = _mapper.Map<GetQuesitonByQuizIdDto>(entity);
+            var answerList = await _answerRepository.GetAnswerByQuesitonId(question.Id);
+
+
+            question.Answers = _mapper.Map<Collection<Answer>>(answerList);
+
+
             return await Result<GetQuesitonByQuizIdDto>.SuccessAsync(question);
         }
     }

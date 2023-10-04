@@ -27,13 +27,14 @@ namespace WhoAmI.Application.Features.Quizs.Command
     {
         public IUnitOfWork _unitOfWork { get; set; }
         public IMapper mapper { get; set; }
-       
+        public IMediator mediator { get; set; }
 
-        public CreateQuizCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateQuizCommandHandler(IUnitOfWork unitOfWork, IMapper mapper,IMediator mediator)
         {
             _unitOfWork = unitOfWork;
             this.mapper = mapper;
-           }
+            this.mediator = mediator;
+        }
 
         public async Task<Result<int>> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
         {
@@ -45,14 +46,16 @@ namespace WhoAmI.Application.Features.Quizs.Command
 
             };
              await _unitOfWork.Repository<Quiz>().AddAsync(quiz);
-                  
+           
+
+
             quiz.AddDomainEvent(new QuizCreatedEvent(quiz));
             await _unitOfWork.Save(cancellationToken);
 
 
-            return await Result<int>.SuccessAsync(quiz.Id,"Quiz Created");
+           return await Result<int>.SuccessAsync(quiz.Id,"Quiz Created");
 
-
+        
         }
     }
 }

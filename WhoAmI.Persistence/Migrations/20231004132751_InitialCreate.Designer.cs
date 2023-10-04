@@ -12,7 +12,7 @@ using WhoAmI.Persistence.Contexts;
 namespace WhoAmI.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231003122702_InitialCreate")]
+    [Migration("20231004132751_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -49,7 +49,7 @@ namespace WhoAmI.Persistence.Migrations
                     b.Property<bool>("IsTrue")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("QuestionId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UpdatedBy")
@@ -127,7 +127,7 @@ namespace WhoAmI.Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("QuizId")
+                    b.Property<int>("QuizId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UpdatedBy")
@@ -169,8 +169,8 @@ namespace WhoAmI.Persistence.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -183,14 +183,18 @@ namespace WhoAmI.Persistence.Migrations
                 {
                     b.HasOne("WhoAmI.Domain.Entities.Question", null)
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WhoAmI.Domain.Entities.Question", b =>
                 {
                     b.HasOne("WhoAmI.Domain.Entities.Quiz", null)
                         .WithMany("Questions")
-                        .HasForeignKey("QuizId");
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WhoAmI.Domain.Entities.Quiz", b =>

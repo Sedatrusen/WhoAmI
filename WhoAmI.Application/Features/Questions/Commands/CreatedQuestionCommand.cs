@@ -43,12 +43,14 @@ namespace WhoAmI.Application.Features.Questions.Commands
                 Answers = request.Answers,
             };
 
-          await _unitOfWork.Repository<Question>().AddAsync(question);
+            await _unitOfWork.Repository<Question>().AddAsync(question);
            
-            
             question.AddDomainEvent(new QuestionCreatedEvent(question));
             await _unitOfWork.Save(cancellationToken);
             return await Result<int>.SuccessAsync(question.Id, "Quesiton Created.");
+            
+            
+          
         }
     }
 }
