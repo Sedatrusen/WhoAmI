@@ -10,10 +10,10 @@ namespace WhoAmI.Domain.Entities
 {
     public class Question : BaseAuditableEntity
     {
-        public required string Body { get; set; }
-        public required Collection<Answer> Answers {  get; set; }
+        public  string Body { get; set; }
+        public  Collection<Answer> Answers {  get; set; }
      
-        public required int QuizId { get; set; }
+        public  int QuizId { get; set; }
 
         
 

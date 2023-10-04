@@ -11,7 +11,7 @@ namespace WhoAmI.Domain.Entities
 {
     public  class Quiz : BaseAuditableEntity
     {
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public required Collection<Question> Questions { get; set; }
         public QuizType QuizType { get; set; }
     }

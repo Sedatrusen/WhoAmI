@@ -43,18 +43,9 @@ namespace WhoAmI.Application.Features.Questions.Commands
                 Answers = request.Answers,
             };
 
-            foreach (var answer in request.Answers)
-            {
-                CreateAnswerCommand createAnswer = new CreateAnswerCommand() { 
-                    Body = answer.Body,
-                 IsSelected=answer.IsSelected,
-                  IsTrue=answer.IsTrue,
-                   QuestionId = question.Id,
-                };
-             await   _mediator.Send(createAnswer);
-            }
-
-            await _unitOfWork.Repository<Question>().AddAsync(question);
+          await _unitOfWork.Repository<Question>().AddAsync(question);
+           
+            
             question.AddDomainEvent(new QuestionCreatedEvent(question));
             await _unitOfWork.Save(cancellationToken);
             return await Result<int>.SuccessAsync(question.Id, "Quesiton Created.");

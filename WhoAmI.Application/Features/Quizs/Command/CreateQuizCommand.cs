@@ -17,7 +17,7 @@ namespace WhoAmI.Application.Features.Quizs.Command
 {
     public class CreateQuizCommand : IRequest<Result<int>>,IMapFrom<Quiz>
     {
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public required Collection<Question> Questions { get; set; }
         public QuizType QuizType { get; set; }
     }
@@ -27,14 +27,13 @@ namespace WhoAmI.Application.Features.Quizs.Command
     {
         public IUnitOfWork _unitOfWork { get; set; }
         public IMapper mapper { get; set; }
-        public IMediator mediator { get; set; }
+       
 
-        public CreateQuizCommandHandler(IUnitOfWork unitOfWork, IMapper mapper,IMediator mediator)
+        public CreateQuizCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             this.mapper = mapper;
-            this.mediator = mediator;
-        }
+           }
 
         public async Task<Result<int>> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
         {
@@ -45,22 +44,12 @@ namespace WhoAmI.Application.Features.Quizs.Command
                 Questions = request.Questions,
 
             };
-
-            foreach (var question in request.Questions)
-            {
-                CreatedQuestionCommand createdQuestionCommand = new CreatedQuestionCommand
-                {
-                    Answers = question.Answers,
-                    Body = question.Body,
-                    QuizId = question.QuizId,
-
-                };
-                await mediator.Send(createdQuestionCommand);
-            }
-
-            await _unitOfWork.Repository<Quiz>().AddAsync(quiz);
+             await _unitOfWork.Repository<Quiz>().AddAsync(quiz);
+                  
             quiz.AddDomainEvent(new QuizCreatedEvent(quiz));
             await _unitOfWork.Save(cancellationToken);
+
+
             return await Result<int>.SuccessAsync(quiz.Id,"Quiz Created");
 
 
