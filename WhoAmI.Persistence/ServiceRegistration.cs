@@ -35,7 +35,8 @@ namespace WhoAmI.Persistence
                      .AddTransient<IMyUserRepository, MyUserRepository>()
             .AddTransient<IQuizRepository, QuizRepository>()
             .AddTransient<IQuestionRepository, QuestionRepository>()
-            .AddTransient<IAnswerRepository, AnswerRepository>();
+            .AddTransient<IAnswerRepository, AnswerRepository>()
+             .AddTransient<IQuizResultRepository, QuizResultRepository>(); ;
 
 
 
