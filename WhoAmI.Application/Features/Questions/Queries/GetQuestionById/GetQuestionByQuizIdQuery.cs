@@ -2,6 +2,7 @@
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace WhoAmI.Application.Features.Questions.Queries.GetQuestionById
             var entity = await _questionRepository.GetQuesitonsByQuizId(request.Id);
             
             var question = _mapper.Map<GetQuesitonByQuizIdDto>(entity);
+            question.Answers =_mapper.Map<Collection<Answer>>(AnswerList);
             
             return await Result<GetQuesitonByQuizIdDto>.SuccessAsync(question);
         }
